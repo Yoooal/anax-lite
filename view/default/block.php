@@ -5,7 +5,7 @@ if (isset($class)) {
     $classes[] = $class;
 }
 
-// Load content details from route 
+// Load content details from route
 if (isset($contentRoute)) {
     extract($this->getContentForRoute($contentRoute));
 }
