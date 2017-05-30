@@ -14,7 +14,16 @@
           </div>
           <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
             <div class="panel-body">
-
+              <h4>Hur känns det att hoppa rakt in i klasser med PHP, gick det bra?</h4>
+              Det här var, utan tvekan, det största och mest utmanande första (kmom01) kursmomentet hittills.
+              Nu i efterhand känns det som en nyttig genomgång, repetition och uppdatering av kunskaper.
+              Men i början kändes det som att det var lite väl stort och komplext för att vara ett första kursmoment.
+              Men jag är samtidigt glad av att ha genomarbetat kursmomentet, då jag verkligen fick fräscha upp mina kunskaper av PHP.
+              <h4>Berätta om dina reflektioner kring ramverk, anax-lite och din me-sida.</h4>
+              Det ska bli jätte kul och intressant att få jobba mer grundligt och djupgående med Anax-lite som php ramverk.
+              I design kursen jobbade vi med ett liknande ramverk "anax-flat", men då fokuserade vi mest på design aspekter och skrapa mest på ytan av hur ramverket i sig fungerade. Nu verkar det som om vi mer djupgående ska förstå hur själva ramverket fungerar, vilket är intressant!
+              <h4>Gick det bra att komma igång med MySQL, har du liknande erfarenheter sedan tidigare?</h4>
+              Ja, MySQL strukturen och databaser känner man sig rätt så van vid nu, då man har arbetat med det både i HTML/PHP- och OOPython kursen. Känner mig dock inte 100 procentig än, så det ska bli intressant att fördjupa sig ännu mer i MySQL.
             </div>
           </div>
         </div>
@@ -70,7 +79,7 @@
           </div>
           <div id="collapseFive" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFive">
             <div class="panel-body">
-              
+
             </div>
           </div>
         </div>

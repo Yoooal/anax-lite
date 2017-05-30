@@ -1,21 +1,22 @@
 <?php
-$urlHome  = $app->url->create("");
-$urlAbout = $app->url->create("about");
-$urlReport = $app->url->create("report");
 
 $navbar = [
     "items" => [
         "hem" => [
             "text" => "Home",
-            "route" => "$urlHome",
+            "route" => "",
         ],
         "about" => [
             "text" => "About",
-            "route" => "$urlAbout",
+            "route" => "about",
         ],
         "report" => [
             "text" => "Report",
-            "route" => "$urlReport",
+            "route" => "report",
+        ],
+        "session" => [
+            "text" => "Session",
+            "route" => "session",
         ],
     ]
 ];
@@ -26,10 +27,10 @@ foreach ($navbar["items"] as $key => $value) {
       $text = $value;
     }
     elseif ($key == "route") {
-      $route = $value;
+      $route = $app->url->create($value);
     }
   }
-  $html .= "<li><a href=" . $route . ">" . $text . "</a></li>";
+  $html .= "<li><a href=$route>$text</a></li>";
 }
 
 ?>
@@ -44,7 +45,7 @@ foreach ($navbar["items"] as $key => $value) {
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="">OOPHP</a>
+        <a class="navbar-brand" href=" ">OOPHP</a>
       </div>
       <div id="navbar" class="navbar-collapse collapse">
         <ul class="nav navbar-nav">

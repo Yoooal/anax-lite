@@ -6,7 +6,7 @@
     </div>
     <div class="row">
       <div class="col-md-3">
-        <img src="img/about.png" class="img-responsive img-thumbnail" alt="Responsive image">
+        <img src="img/about.png" class="img-responsive" alt="Responsive image">
       </div>
       <div class="col-md-9 well">
         <p>

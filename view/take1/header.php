@@ -8,5 +8,7 @@
   <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://getbootstrap.com/dist/css/bootstrap-theme.min.css" rel="stylesheet">
   <!-- Private stylesheet, loads last -->
-  <link rel="stylesheet" href="styles/style.css">
+  <link rel="stylesheet" type="text/css" href="<?= $app->style ?>">
 </head>
+
+<body role="document">
