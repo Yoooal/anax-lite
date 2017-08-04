@@ -18,5 +18,13 @@ return [
             "text" => "Session",
             "route" => "session",
         ],
+        "dice" => [
+            "text" => "Dice",
+            "route" => "dice",
+        ],
+        "login" => [
+            "text" => "Login",
+            "route" => "login",
+        ]
     ]
 ];

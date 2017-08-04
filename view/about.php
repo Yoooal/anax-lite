@@ -1,10 +1,12 @@
+<?php $urlReport = $app->url->create("status"); ?>
+
 <div class="container" role="main">
     <div class="page-header">
-        <h1>Joel Pettersson</h1>
+        <h1>About</h1>
     </div>
     <div class="row">
       <div class="col-md-3">
-        <img src="img/profil.jpg" class="img-responsive img-thumbnail" alt="Responsive image">
+        <img src="img/profil.jpg" class="img-responsive" alt="Responsive image">
       </div>
       <div class="col-md-9 well">
         <p>
@@ -19,6 +21,9 @@
           att möta nytt folk och umgås med mina vänner.
           Det var kul att ni kom in på min hemsida.
           Hoppas ni gillar den!
+          Objektorienterad PHP ska bli spännande och jag ser fram emot den här kursen!<br>
+          Repo på github: <a href="https://github.com/Yoooal/anax-lite">Anax-lite</a><br>
+          <a href="<?= $urlReport ?>">Status</a>
         </p>
       </div>
     </div>

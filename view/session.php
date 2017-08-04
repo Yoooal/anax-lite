@@ -1,6 +1,7 @@
 <?php
-$session = new Session();
+$session = $app->session;
 $session->start();
+
 if ($session->has("number")) {
   $session->get("number");
 }

@@ -17,10 +17,11 @@ class Navbar implements \Anax\Common\AppInjectableInterface,
             $text = $value;
           }
           elseif ($key == "route") {
+            $active = $this->app->request->getRoute() == $value ? "active" : "";
             $route = $this->app->url->create($value);
           }
         }
-        $html .= "<li><a href=$route>$text</a></li>";
+        $html .= "<li class='$active'><a href=$route>$text</a></li>";
       }
       return $html;
     }

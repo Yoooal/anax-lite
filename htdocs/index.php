@@ -8,20 +8,24 @@ define("ANAX_APP_PATH", ANAX_INSTALL_PATH);
 
 // Include essentials
 require ANAX_INSTALL_PATH . "/config/error_reporting.php";
+require ANAX_INSTALL_PATH . "/config/function.php";
 
 // Get the autoloader by using composers version.
 require ANAX_INSTALL_PATH . "/vendor/autoload.php";
 
 // Add all resources to $app
-$app = new \joel\App\App();
-$app->request = new \Anax\Request\Request();
-$app->response = new \Anax\Response\Response();
-$app->url     = new \Anax\Url\Url();
-$app->router  = new \Anax\Route\RouterInjectable();
-$app->router   = new \Anax\Route\RouterInjectable();
-$app->view     = new \Anax\View\ViewContainer();
+$app            = new \joel\App\App();
+$app->request   = new \Anax\Request\Request();
+$app->response  = new \Anax\Response\Response();
+$app->url       = new \Anax\Url\Url();
+$app->router    = new \Anax\Route\RouterInjectable();
+$app->router    = new \Anax\Route\RouterInjectable();
+$app->view      = new \Anax\View\ViewContainer();
+$app->session   = new \joel\Session\Session();
+$app->database  = new \joel\Database\Database();
+$app->navbar    = new \joel\Navbar\Navbar();
+$app->diceGame  = new \joel\DiceGame\DiceGame();
 
-$app->navbar = new \joel\Navbar\Navbar();
 $app->navbar->setApp($app);
 $app->navbar->configure("navbar.php");
 
