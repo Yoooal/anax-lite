@@ -1,6 +1,5 @@
 <?php
 $session = $app->session;
-$session->start();
 
 if ($session->has("number")) {
   $session->get("number");
@@ -47,6 +46,7 @@ if ($action !== null) {
       <h1>Test the session - choose route</h1>
   </div>
   <div class="page-content">
+    <div class="col-md-6 bak">
       <h4><?php echo "Current Value: " . $_SESSION['number'] ?></h4>
 
       <form action="<?php __FILE__ ?>" method="POST">
@@ -60,5 +60,6 @@ if ($action !== null) {
 
         <input type="submit" class="btn btn-danger" name="action" value="destroy">
       </form>
+    </div>
   </div>
 </div>

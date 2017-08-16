@@ -21,10 +21,6 @@ return [
         "dice" => [
             "text" => "Dice",
             "route" => "dice",
-        ],
-        "login" => [
-            "text" => "Login",
-            "route" => "login",
         ]
     ]
 ];
