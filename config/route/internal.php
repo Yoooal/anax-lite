@@ -1,5 +1,57 @@
 <?php
 
+$app->router->add("logout", function () use ($app) {
+    $app->view->add("header", ["title" => "logout"]);
+    $app->view->add("navbar/navbar");
+    $app->view->add("login/logout");
+    $app->view->add("footer");
+
+    $app->response->setBody([$app->view, "render"])
+                  ->send();
+});
+
+$app->router->add("handle_new_user", function () use ($app) {
+    $app->view->add("header", ["title" => "handle_new_user"]);
+    $app->view->add("navbar/navbar");
+    $app->view->add("login/handle_new_user");
+    $app->view->add("footer");
+
+    $app->response->setBody([$app->view, "render"])
+                  ->send();
+});
+
+$app->router->add("validate", function () use ($app) {
+    $app->view->add("header", ["title" => "validate"]);
+    $app->view->add("navbar/navbar");
+    $app->view->add("login/validate");
+    $app->view->add("footer");
+
+    $app->response->setBody([$app->view, "render"])
+                  ->send();
+});
+
+$app->router->add("status", function () use ($app) {
+    $data = [
+        "Server" => php_uname(),
+        "PHP version" => phpversion(),
+        "Included files" => count(get_included_files()),
+        "Memory used" => memory_get_peak_usage(true),
+        "Execution time" => microtime(true) - $_SERVER['REQUEST_TIME_FLOAT'],
+    ];
+
+    $app->response->sendJson($data);
+});
+
+$app->router->add("sessionStatus", function () use ($app) {
+    $data = [
+        "Session start" => session_start(),
+        "Session unset" => session_unset(),
+        "Session destroy" => session_destroy(),
+    ];
+
+    $app->response->sendJson($data);
+});
+
 $app->router->addInternal("404", function () use ($app) {
     $currentRoute = $app->request->getRoute();
     $routes = "<ul>";

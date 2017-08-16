@@ -1,7 +1,6 @@
 <?php
 $session = $app->session;
 $diceGame = $app->diceGame;
-$session->start();
 
 if ($session->has("rolls")) {
   $session->get("rolls");
@@ -59,7 +58,7 @@ if ($diceGame->diceNumber == 1) {
   <div class="page-header">
       <h1>Dice Game</h1>
   </div>
-  <div class="page-content">
+  <div class="page-content bak">
     <div class="row">
       <div class="col-md-4">
         <h2>Total Score</h2>

@@ -6,10 +6,10 @@
     </div>
     <div class="row">
       <div class="col-md-3">
-        <img src="img/profil.jpg" class="img-responsive" alt="Responsive image">
+        <img src="img/profil.jpg" class="img-responsive aboutPicture" alt="Responsive image">
       </div>
-      <div class="col-md-9 well">
-        <p>
+      <div class="col-md-9 bak">
+        <br>
           Hej mitt namn är Joel Pettersson.
           Jag är 29 år och bor i Stockholm.
           Är uppväxt i Göteborg men flyttade till Stockholm för
@@ -24,7 +24,6 @@
           Objektorienterad PHP ska bli spännande och jag ser fram emot den här kursen!<br>
           Repo på github: <a href="https://github.com/Yoooal/anax-lite">Anax-lite</a><br>
           <a href="<?= $urlReport ?>">Status</a>
-        </p>
       </div>
     </div>
 </div>
