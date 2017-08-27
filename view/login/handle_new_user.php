@@ -1,6 +1,5 @@
 <?php
 $db = $app->db;
-$db->connect();
 
 // Handle incoming POST variables
 $user_name = isset($_POST["new_name"]) ? htmlentities($_POST["new_name"]) : null;

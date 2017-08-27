@@ -14,20 +14,21 @@ require ANAX_INSTALL_PATH . "/config/function.php";
 require ANAX_INSTALL_PATH . "/vendor/autoload.php";
 
 // Add all resources to $app
-$app            = new \joel\App\App();
+$app                = new \joel\App\App();
 
-$app->request   = new \Anax\Request\Request();
-$app->response  = new \Anax\Response\Response();
-$app->url       = new \Anax\Url\Url();
-$app->router    = new \Anax\Route\RouterInjectable();
-$app->router    = new \Anax\Route\RouterInjectable();
-$app->view      = new \Anax\View\ViewContainer();
-$app->db        = new \Anax\Database\DatabaseConfigure();
+$app->request       = new \Anax\Request\Request();
+$app->response      = new \Anax\Response\Response();
+$app->url           = new \Anax\Url\Url();
+$app->router        = new \Anax\Route\RouterInjectable();
+$app->view          = new \Anax\View\ViewContainer();
+$app->db            = new \Anax\Database\DatabaseConfigure();
 
-$app->session   = new \joel\Session\Session();
-$app->cookie    = new \joel\Cookie\Cookie();
-$app->navbar    = new \joel\Navbar\Navbar();
-$app->diceGame  = new \joel\DiceGame\DiceGame();
+$app->textfilter    = new \Mos\TextFilter\CTextFilter();
+
+$app->session       = new \joel\Session\Session();
+$app->cookie        = new \joel\Cookie\Cookie();
+$app->navbar        = new \joel\Navbar\Navbar();
+$app->diceGame      = new \joel\DiceGame\DiceGame();
 
 $app->db->configure("database.php");
 $app->db->setDefaultsFromConfiguration();

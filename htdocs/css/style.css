@@ -29,17 +29,12 @@ body {
   margin-top: 80px;
 }
 
-h1 {
-  color: #4d4d4d;
-  font-family: 'Kaushan Script', cursive;
-  font-size: 4em;
-}
-
 .aboutPicture {
   border-radius: 10px;
 }
 
 .jumbotron h1 {
+  font-family: 'Kaushan Script', cursive;
   color: #4d4d4d;
   font-size: 8em;
 }

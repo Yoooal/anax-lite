@@ -1,7 +1,6 @@
 <?php
 $session = $app->session;
 $db = $app->db;
-$db->connect();
 
 $content = '<div class="alert alert-danger" role="alert">User name or password is incorrect, Try again</div>';
 
@@ -22,7 +21,7 @@ if ($user_name != null && $user_pass != null) {
     // Verify user password
     if (password_verify($user_pass, $password)) {
         $session->set("name", $user_name);
-        header("Location: welcome");
+        header("Location: profile");
     } else {
         // Redirect to login.php
         echo $content;

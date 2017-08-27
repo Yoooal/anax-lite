@@ -21,6 +21,14 @@ return [
         "dice" => [
             "text" => "Dice",
             "route" => "dice",
+        ],
+        "blog" => [
+            "text" => "Blog",
+            "route" => "blog",
+        ],
+        "pages" => [
+            "text" => "Pages",
+            "route" => "pages",
         ]
     ]
 ];

@@ -15,7 +15,8 @@
         "anax/response": "^1.0",
         "anax/view": "^1.0",
         "mos/cimage": "^0.7.19",
-        "anax/database": "^1.0"
+        "anax/database": "^1.0",
+        "mos/ctextfilter": "^1.2"
     },
     "autoload": {
         "psr-4": {"joel\\": "src/"}

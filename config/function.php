@@ -14,6 +14,18 @@ function getGet($key, $default = null)
         : $default;
 }
 
+/**
+ * Check if key is set in POST.
+ *
+ * @param mixed $key     to look for
+ *
+ * @return boolean true if key is set, otherwise false
+ */
+function hasKeyPost($key)
+{
+    return array_key_exists($key, $_POST);
+}
+
 
 
 /**
@@ -24,11 +36,31 @@ function getGet($key, $default = null)
  *
  * @return mixed value from POST or the default value
  */
-function getPost($key, $default = null)
-{
-    return isset($_POST[$key])
-        ? $_POST[$key]
-        : $default;
+ function getPost($key, $default = null)
+ {
+     if (is_array($key)) {
+         $key = array_flip($key);
+         return array_replace($key, array_intersect_key($_POST, $key));
+     }
+
+     return isset($_POST[$key])
+         ? $_POST[$key]
+         : $default;
+ }
+
+ /**
+ * Create a slug of a string, to be used as url.
+ *
+ * @param string $str the string to format as slug.
+ *
+ * @return str the formatted slug.
+ */
+function slugify($str) {
+    $str = mb_strtolower(trim($str));
+    $str = str_replace(array('å','ä','ö'), array('a','a','o'), $str);
+    $str = preg_replace('/[^a-z0-9-]/', '-', $str);
+    $str = trim(preg_replace('/-+/', '-', $str), '-');
+    return $str;
 }
 
 
@@ -79,7 +111,7 @@ function orderby2($column, $route)
 {
     $asc = mergeQueryString(["orderby" => $column, "order" => "asc"], $route);
     $desc = mergeQueryString(["orderby" => $column, "order" => "desc"], $route);
-    
+
     return <<<EOD
 <span class="orderby">
 <a href="$asc">&darr;</a>

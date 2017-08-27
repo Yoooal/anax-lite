@@ -34,12 +34,12 @@ $delete_cookie = isset($_GET["delete_cookie"]) ? htmlentities($_GET["delete_cook
 
 if ($new_cookie != null) {
   $cookie->set($user_name, $new_cookie);
-  header("Location: welcome");
+  header("Location: profile");
 }
 
 if ($delete_cookie != null) {
   $cookie->delete($user_name);
-  header("Location: welcome");
+  header("Location: profile");
 }
 
 // Check if all fields are filled
@@ -69,7 +69,7 @@ if ($old_pass != null && $new_pass != null && $re_pass != null) {
     <div class="col-md-4 bak">
     <h2>Change Password</h2>
     <?=$status?>
-    <form action="welcome" method="POST">
+    <form action="" method="POST">
       <div class="form-group">
         <label>Old Password:</label>
         <input type="password" name="old_pass" class="form-control" placeholder="Old password" required>
@@ -90,7 +90,7 @@ if ($old_pass != null && $new_pass != null && $re_pass != null) {
     <h2>Set a Cookie</h2>
     <?=$cookieStatus?>
     <h4>Your Cookie: <?=$yourCookie?></h4>
-    <form action="welcome" method="POST">
+    <form action="" method="POST">
       <div class="form-group">
         <label>New Cookie:</label>
         <input type="text" name="new_cookie" class="form-control" placeholder="Cookie here..">

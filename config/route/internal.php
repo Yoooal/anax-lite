@@ -1,33 +1,31 @@
 <?php
 
-$app->router->add("logout", function () use ($app) {
-    $app->view->add("header", ["title" => "logout"]);
-    $app->view->add("navbar/navbar");
-    $app->view->add("login/logout");
-    $app->view->add("footer");
+$app->router->add('blog/{slug}', function ($slug) use ($app) {
+  $app->renderPage("blogpost", "$slug");
+});
 
-    $app->response->setBody([$app->view, "render"])
-                  ->send();
+$app->router->add('pages/{page}', function ($page) use ($app) {
+  $app->renderPage("page", "$page");
+});
+
+$app->router->add("delete", function () use ($app) {
+  $app->renderPage("delete", "Delete");
+});
+
+$app->router->add("edit", function () use ($app) {
+  $app->renderPage("edit", "Edit");
+});
+
+$app->router->add("logout", function () use ($app) {
+  $app->renderPage("login/logout", "Logout");
 });
 
 $app->router->add("handle_new_user", function () use ($app) {
-    $app->view->add("header", ["title" => "handle_new_user"]);
-    $app->view->add("navbar/navbar");
-    $app->view->add("login/handle_new_user");
-    $app->view->add("footer");
-
-    $app->response->setBody([$app->view, "render"])
-                  ->send();
+  $app->renderPage("login/handle_new_user", "New User");
 });
 
 $app->router->add("validate", function () use ($app) {
-    $app->view->add("header", ["title" => "validate"]);
-    $app->view->add("navbar/navbar");
-    $app->view->add("login/validate");
-    $app->view->add("footer");
-
-    $app->response->setBody([$app->view, "render"])
-                  ->send();
+  $app->renderPage("login/validate", "Validate");
 });
 
 $app->router->add("status", function () use ($app) {
