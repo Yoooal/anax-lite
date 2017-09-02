@@ -1,5 +1,3 @@
-
-
 DROP TABLE IF EXISTS `Prod2Cat`;
 DROP TABLE IF EXISTS `ProdCategory`;
 DROP TABLE IF EXISTS `Inventory`;
@@ -175,7 +173,7 @@ CREATE TABLE `VarukorgRow` (
 	`items` INT,
 
 	PRIMARY KEY (`id`),
-	FOREIGN KEY (`varukorg`) REFERENCES `Varukorg` (`id`),
+	FOREIGN KEY (`varukorg`) REFERENCES `Varukorg` (`customer`),
 	FOREIGN KEY (`product`) REFERENCES `Product` (`id`)
 );
 
@@ -206,30 +204,22 @@ CREATE TABLE `OrderRow` (
 	FOREIGN KEY (`product`) REFERENCES `Product` (`id`)
 );
 
-
+-- CREATE VIEW Vinventory AS
+-- SELECT
+-- 	I.shelf_id,
+--   P.description,
+-- 	PC.category,
+--   I.items
+-- FROM Inventory AS I
+-- 	INNER JOIN Product AS P
+-- 		ON I.prod_id = P.id
+-- 	INNER JOIN Prod2Cat AS P2C
+-- 		ON P.id = P2C.prod_id
+-- 	INNER JOIN ProdCategory AS PC
+-- 		ON PC.id = P2C.cat_id
+-- GROUP BY I.prod_id
+-- ;
 --
--- Your first Varukorg, hurray!
---
-INSERT INTO `Varukorg` (`customer`) VALUES
-(1), (2)
-;
-
-CREATE VIEW Vinventory AS
-SELECT
-	I.shelf_id,
-  P.description,
-	PC.category,
-  I.items
-FROM Inventory AS I
-	INNER JOIN Product AS P
-		ON I.prod_id = P.id
-	INNER JOIN Prod2Cat AS P2C
-		ON P.id = P2C.prod_id
-	INNER JOIN ProdCategory AS PC
-		ON PC.id = P2C.cat_id
-GROUP BY I.prod_id
-;
-
 
 -- ------------------------------------------------------------------------
 --
@@ -245,18 +235,14 @@ CREATE TABLE WebshopLog
     `amount` DECIMAL(4, 2)
 );
 
---
--- Trigger for logging updating balance
---
+
 DROP TRIGGER IF EXISTS InventoryUpdates;
 
 CREATE TRIGGER InventoryUpdates
 AFTER UPDATE
 ON Inventory FOR EACH ROW
     INSERT INTO WebshopLog (`what`, `product`, `balance`, `amount`)
-        VALUES ("Inventory", NEW.product, NEW.items, NEW.items - OLD.items)
-				INNER JOIN Product AS P
-					ON I.prod_id = P.id;
+        VALUES ("Inventory", NEW.prod_id, NEW.items, NEW.items - OLD.items);
 
 DROP TRIGGER IF EXISTS newVarukorgRow;
 
@@ -264,7 +250,7 @@ CREATE TRIGGER newVarukorgRow
 AFTER INSERT
 ON VarukorgRow FOR EACH ROW
     INSERT INTO WebshopLog (`what`, `product`, `balance`, `amount`)
-        VALUES ("newVarukorgRow", NEW.product, NEW.items, NEW.items);
+        VALUES (NEW.varukorg, NEW.product, NEW.items, NEW.items);
 
 DROP TRIGGER IF EXISTS deleteVarukorgRow;
 
@@ -274,13 +260,13 @@ ON VarukorgRow FOR EACH ROW
     INSERT INTO WebshopLog (`what`, `product`, `balance`, `amount`)
         VALUES ("deletedVarukorgRow", OLD.product, '0', 0 - OLD.items);
 
-DROP TRIGGER IF EXISTS newOrderRow;
-
-CREATE TRIGGER newOrderRow
-AFTER INSERT
-ON OrderRow FOR EACH ROW
-    INSERT INTO WebshopLog (`what`, `product`, `balance`, `amount`)
-        VALUES ("newVarukorgRow", NEW.product, NEW.items, NEW.items);
+-- DROP TRIGGER IF EXISTS newOrderRow;
+--
+-- CREATE TRIGGER newOrderRow
+-- AFTER INSERT
+-- ON OrderRow FOR EACH ROW
+--     INSERT INTO WebshopLog (`what`, `product`, `balance`, `amount`)
+--         VALUES ("newVarukorgRow", NEW.varukorg, NEW.items, NEW.items);
 
 -- ------------------------------------------------------------------------
 --
@@ -315,19 +301,46 @@ DELIMITER ;
 
 -- ------------------------------------------------------------------------
 
--- SELECT * FROM WebshopLog;
--- SELECT * FROM HaveToOrderLog;
--- SELECT * FROM VarukorgRow;
+SELECT * FROM WebshopLog;
+SELECT * FROM HaveToOrderLog;
+SELECT * FROM VarukorgRow;
+SELECT * FROM `Order`;
+SELECT * FROM OrderRow;
 
 -- ------------------------------------------------------------------------
 --
--- createVarukorgRow
+-- create Varukorg
 --
-DROP PROCEDURE createVarukorgRow;
+DROP PROCEDURE IF EXISTS createVarukorg;
 
 DELIMITER //
 
-CREATE PROCEDURE createVarukorgRow(
+CREATE PROCEDURE createVarukorg(
+	thisCustomer INT
+)
+BEGIN
+	START TRANSACTION;
+
+	INSERT INTO Varukorg
+	SET
+	customer = thisCustomer;
+	COMMIT;
+
+END
+//
+DELIMITER ;
+
+CALL createVarukorg(1);
+
+-- ------------------------------------------------------------------------
+--
+-- add To Varukorg
+--
+-- DROP PROCEDURE addToVarukorg;
+
+DELIMITER //
+
+CREATE PROCEDURE addToVarukorg(
     varukorg INT,
 		product INT,
     amount INT
@@ -341,7 +354,7 @@ BEGIN
 
 	IF currentItems - amount < 0 THEN
 	ROLLBACK;
-    SELECT "Amount on the account is not enough to make transaction.";
+    SELECT "There is not enough items in Inventory to make a transaction.";
 
 	ELSE
 
@@ -365,17 +378,17 @@ END
 DELIMITER ;
 
 
--- CALL createVarukorgRow(1, 3, 97);
+CALL createVarukorgRow(1, 2, 10);
 
 -- ------------------------------------------------------------------------
 --
--- deleteVarukorgRow
+-- remove From Varukorg
 --
-DROP PROCEDURE deleteVarukorgRow;
+DROP PROCEDURE removeFromVarukorg;
 
 DELIMITER //
 
-CREATE PROCEDURE deleteVarukorgRow(
+CREATE PROCEDURE removeFromVarukorg(
 		varukorg INT,
 		product INT,
 		amount INT
@@ -400,34 +413,57 @@ DELIMITER ;
 
 -- CALL deleteVarukorgRow(1, 2, 20);
 
-
 -- ------------------------------------------------------------------------
 --
--- fromVarukorgToOrder
+-- from Varukorg To Order
 --
 DROP PROCEDURE fromVarukorgToOrder;
 
 DELIMITER //
 
 CREATE PROCEDURE fromVarukorgToOrder(
-		varukorg INT,
-		product INT,
-		amount INT
+	varukorg INT
 )
 BEGIN
+	DECLARE amount INT;
+	DECLARE i INT DEFAULT 0;
+	DECLARE n INT DEFAULT 0;
+	DECLARE productId INT;
+	DECLARE orderNr INT;
 
 	START TRANSACTION;
 
-	DELETE FROM VarukorgRow WHERE varukorg = varukorg;
+	-- INSERT INTO `Order` (`customer`) VALUES (varukorg);
+	INSERT INTO `Order` (`customer`)
+	SELECT customer FROM Varukorg
+	WHERE id = varukorg;
+	SET orderNr = LAST_INSERT_ID();
 
-	INSERT INTO `Order` (`customer`) VALUES (varukorg);
-	INSERT INTO `OrderRow` (`order`, `product`, `items`)
-	VALUES
-	(varukorg, product, amount)
-	;
+	SELECT COUNT(*) FROM VarukorgRow WHERE varukorg = varukorg INTO n;
+	SET i = 0;
+	aLoop: WHILE i < n DO
+		SELECT items FROM VarukorgRow WHERE varukorg = varukorg LIMIT i,1
+	    INTO amount;
+		SELECT product FROM VarukorgRow WHERE varukorg = varukorg LIMIT i,1
+	    INTO productId;
 
-  COMMIT;
+	INSERT INTO OrderRow
+	(`order`, `product`, `items`)
+	SELECT
+		orderNr, `product`, `items`
+	FROM VarukorgRow
+		WHERE varukorg = varukorg
+			LIMIT i,1;
+
+SET i = i + 1;
+END WHILE;
+
+DELETE FROM VarukorgRow WHERE varukorg = varukorg;
+
+COMMIT;
+
 END
 //
-
 DELIMITER ;
+
+CALL fromVarukorgToOrder(1);
