@@ -1,13 +1,12 @@
 <?php
 $session = $app->session;
 $cookie = $app->cookie;
-
-if (!$session->has("name")) {
-  header("Location: about");
-}
-
 $db = $app->db;
 $db->connect();
+
+if ($session->get("name") != "admin") {
+  header('Location: ' . $_SERVER['HTTP_REFERER']);
+}
 
 $status = '<div class="alert alert-info" role="alert">Change Password</div>';
 $user_name = $session->get("name");

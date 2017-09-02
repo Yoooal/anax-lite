@@ -40,6 +40,7 @@ if ($session->has("name")) {
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class='<?=$user_not_loggedin?>'><a href="<?= $app->url->create("profile") ?>">Profile</a></li>
+        <li class='<?=$admin?>'><a href="<?= $app->url->create("webshop") ?>">Webshop</a></li>
         <li class='<?=$admin?>'><a href="<?= $app->url->create("admin") ?>">Admin</a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b><?= $content ?></b> <span class="caret"></span></a>

@@ -32,6 +32,10 @@ $app->router->add("profile", function () use ($app) {
   $app->renderPage("login/profile", "Profile");
 });
 
+$app->router->add("webshop", function () use ($app) {
+  $app->renderPage("webshop", "Webshop");
+});
+
 $app->router->add("admin", function () use ($app) {
   $app->renderPage("login/admin", "Admin");
 });

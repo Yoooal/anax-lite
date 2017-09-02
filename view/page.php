@@ -1,21 +1,9 @@
 <?php
 $db = $app->db;
+$db->connect();
 $textfilter = $app->textfilter;
 
-$sql = <<<EOD
-SELECT
-*,
-DATE_FORMAT(COALESCE(updated, published), '%Y-%m-%dT%TZ') AS modified_iso8601,
-DATE_FORMAT(COALESCE(updated, published), '%Y-%m-%d') AS modified
-FROM content
-WHERE
-path = ?
-AND type = ?
-AND (deleted IS NULL OR deleted > NOW())
-AND published <= NOW()
-;
-EOD;
-
+$sql = $app->sqlCode->getSqlCode("page");
 $route = $_SERVER["PATH_INFO"];
 $page = substr($route, 7);
 $content = $db->executeFetch($sql, [$page, "page"]);

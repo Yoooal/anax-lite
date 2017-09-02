@@ -25,6 +25,11 @@ body {
   margin-top: 3em;
 }
 
+.webshop {
+  max-width: 150px;
+  height: 100px;
+}
+
 .table {
   margin-top: 80px;
 }

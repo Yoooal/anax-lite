@@ -1,19 +1,8 @@
 <?php
 $db = $app->db;
+$db->connect();
 
-$sql = <<<EOD
-SELECT
-*,
-CASE
-    WHEN (deleted <= NOW()) THEN "isDeleted"
-    WHEN (published <= NOW()) THEN "isPublished"
-    ELSE "notPublished"
-END AS status
-FROM content
-WHERE type=?
-;
-EOD;
-
+$sql = $app->sqlCode->getSqlCode("pages");
 $resultset = $db->executeFetchAll($sql, ["page"]);
 ?>
 

@@ -16,6 +16,10 @@ $app->router->add("edit", function () use ($app) {
   $app->renderPage("edit", "Edit");
 });
 
+$app->router->add("editWebshop", function () use ($app) {
+  $app->renderPage("editWebshop", "Edit");
+});
+
 $app->router->add("logout", function () use ($app) {
   $app->renderPage("login/logout", "Logout");
 });

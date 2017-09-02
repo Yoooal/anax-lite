@@ -17,5 +17,3 @@
 <?php
 $session = $app->session;
 $session->start();
-$db = $app->db;
-$db->connect();

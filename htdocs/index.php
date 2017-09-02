@@ -29,6 +29,7 @@ $app->session       = new \joel\Session\Session();
 $app->cookie        = new \joel\Cookie\Cookie();
 $app->navbar        = new \joel\Navbar\Navbar();
 $app->diceGame      = new \joel\DiceGame\DiceGame();
+$app->sqlCode       = new \joel\sqlCode\sqlCode();
 
 $app->db->configure("database.php");
 $app->db->setDefaultsFromConfiguration();

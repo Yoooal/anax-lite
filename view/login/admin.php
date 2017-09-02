@@ -2,6 +2,7 @@
 $session = $app->session;
 $cookie = $app->cookie;
 $db = $app->db;
+$db->connect();
 
 if ($session->get("name") != "admin") {
   header('Location: ' . $_SERVER['HTTP_REFERER']);
@@ -88,7 +89,7 @@ if (hasKeyPost("doCreate")) {
             </div>
           </form>
         </div>
-        <button type="button" class="btn btn-default btn-lg pull-right" data-toggle="modal" data-target="#register">
+        <button type="button" class="btn btn-default btn-lg pull-right" data-toggle="modal" data-target="#addUser">
           <i class="fa fa-user-plus" aria-hidden="true"></i>
         </button>
         <table class="table">
@@ -143,6 +144,9 @@ if (hasKeyPost("doCreate")) {
         <br>
         <div class="row">
         <div class="col-md-12 bak">
+        <div class="col-md-6">
+          <h2>Content</h2>
+        </div>
         <br>
         <button type="button" class="btn btn-default btn-lg pull-right" data-toggle="modal" data-target="#addContent">
           <i class="fa fa-file-text-o" aria-hidden="true"></i>
@@ -150,7 +154,7 @@ if (hasKeyPost("doCreate")) {
         <table class="table">
           <thead>
             <tr>
-                <th>Id</th>
+                <th>#</th>
                 <th>Title</th>
                 <th>Type</th>
                 <th>Published</th>
@@ -179,7 +183,7 @@ if (hasKeyPost("doCreate")) {
         </table>
       </div>
     </div>
-    <div class="modal fade" id="register" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal fade" id="addUser" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">

@@ -1,22 +1,9 @@
 <?php
 $db = $app->db;
+$db->connect();
 $textfilter = $app->textfilter;
 
-$sql = <<<EOD
-SELECT
-*,
-DATE_FORMAT(COALESCE(updated, published), '%Y-%m-%dT%TZ') AS published_iso8601,
-DATE_FORMAT(COALESCE(updated, published), '%Y-%m-%d') AS published
-FROM content
-WHERE
-slug = ?
-AND type = ?
-AND (deleted IS NULL OR deleted > NOW())
-AND published <= NOW()
-ORDER BY published DESC
-;
-EOD;
-
+$sql = $app->sqlCode->getSqlCode("blogpost");
 $route = $_SERVER["PATH_INFO"];
 $slug = substr($route, 6);
 $content = $db->executeFetch($sql, [$slug, "post"]);

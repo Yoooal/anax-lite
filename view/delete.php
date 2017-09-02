@@ -1,5 +1,6 @@
 <?php
 $db = $app->db;
+$db->connect();
 
 $contentId = getPost("contentId") ?: getGet("id");
 if (!is_numeric($contentId)) {

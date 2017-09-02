@@ -1,17 +1,8 @@
 <?php
 $db = $app->db;
+$db->connect();
 
-$sql = <<<EOD
-SELECT
-*,
-DATE_FORMAT(COALESCE(updated, published), '%Y-%m-%dT%TZ') AS published_iso8601,
-DATE_FORMAT(COALESCE(updated, published), '%Y-%m-%d') AS published
-FROM content
-WHERE type=?
-ORDER BY published DESC
-;
-EOD;
-
+$sql = $app->sqlCode->getSqlCode("blog");
 $resultset = $db->executeFetchAll($sql, ["post"]);
 
 ?>

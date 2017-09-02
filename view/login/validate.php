@@ -1,6 +1,7 @@
 <?php
 $session = $app->session;
 $db = $app->db;
+$db->connect();
 
 $content = '<div class="alert alert-danger" role="alert">User name or password is incorrect, Try again</div>';
 

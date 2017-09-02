@@ -1,5 +1,6 @@
 <?php
 $db = $app->db;
+$db->connect();
 
 $status = '<div class="alert alert-info" role="alert">Edit here</div>';
 
