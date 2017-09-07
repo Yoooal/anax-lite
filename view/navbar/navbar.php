@@ -1,10 +1,12 @@
 <?php
 $session = $app->session;
+$db = $app->db;
+$db->connect();
 
 $user_loggedin = "";
 $user_not_loggedin = "disabled";
 $admin = "disabled";
-$content = "<span class='glyphicon glyphicon-user'></span> Login";
+$content = '<i class="fa fa-sign-in" aria-hidden="true"></i> Login';
 $logout = "";
 
 // Make sure no one is logged in
@@ -17,7 +19,8 @@ if ($session->has("name")) {
   }
 }
 
-
+$sql = "SELECT * FROM showCart;";
+$resultset = $db->executeFetchAll($sql);
 ?>
 
 <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -30,7 +33,7 @@ if ($session->has("name")) {
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="<?= $app->url->create("") ?>">OOPHP</a>
+      <a class="navbar-brand" href="<?= $app->url->create("") ?>"><img src="img/sneaker.png" class="img-responsive" alt="Logo"></a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -39,9 +42,38 @@ if ($session->has("name")) {
         <?= $app->navbar->getHTML(); ?>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li class='<?=$user_not_loggedin?>'><a href="<?= $app->url->create("profile") ?>">Profile</a></li>
-        <li class='<?=$admin?>'><a href="<?= $app->url->create("webshop") ?>">Webshop</a></li>
-        <li class='<?=$admin?>'><a href="<?= $app->url->create("admin") ?>">Admin</a></li>
+        <li class="dropdown <?=$user_not_loggedin?>">
+          <a href="#" class="dropdown-toggle <?=$user_not_loggedin?>" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart<span class="caret"></span></a>
+          <ul class="dropdown-menu dropdown-cart" role="menu">
+            <?php foreach ($resultset as $row) : ?>
+              <li>
+                <span class="item">
+                    <span class="item-left">
+                        <img class="img-responsive img-rounded webshop" src="<?=$row->picture?>" alt="" />
+                        <span class="item-info">
+                            <span><?= $row->description ?></span>
+                            <span><?= $row->price ?> kr</span>
+                        </span>
+                    </span>
+                  <!-- <span class="item-right">
+                      <button class="btn btn-xs btn-danger pull-right">x</button>
+                  </span> -->
+                </span>
+              </li>
+              <?php endforeach; ?>
+              <li class="divider"></li>
+            <li><a class="text-center" href="<?= $app->url->create("cart") ?>">View Cart</a></li>
+          </ul>
+        </li>
+        <li class='<?=$user_not_loggedin?>'><a href="<?= $app->url->create("profile") ?>"><i class="fa fa-user" aria-hidden="true"></i> Profile</a></li>
+        <li class="dropdown <?=$admin?>">
+          <a href="#" class="dropdown-toggle <?=$admin?>" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-cogs" aria-hidden="true"></i> Admin<span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li class='<?=$admin?>'><a href="<?= $app->url->create("webshop") ?>">Webshop</a></li>
+            <li class='<?=$admin?>'><a href="<?= $app->url->create("user") ?>">Users</a></li>
+            <li class='<?=$admin?>'><a href="<?= $app->url->create("content") ?>">Content</a></li>
+          </ul>
+        </li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b><?= $content ?></b> <span class="caret"></span></a>
 			     <ul id="login-dp" class="dropdown-menu">
@@ -50,7 +82,7 @@ if ($session->has("name")) {
 						<div class="col-md-12">
 
               <form class="form-signin" role="form" action="validate" method="POST">
-                <img src="img/login.png" alt="Avatar" class="img-responsive avatar">
+                <img src="img/sneaker.png" alt="Avatar" class="img-responsive avatar">
                 <input type="username" name="name" class="form-control" placeholder="Username" required autofocus <?=$user_loggedin?>>
                 <input type="password" name="pass" class="form-control" placeholder="Password" required <?=$user_loggedin?>>
                 <button class="btn btn-lg btn-primary btn-block" type="submit" name="submitForm" value="Login" <?=$user_loggedin?>>Sign in</button>

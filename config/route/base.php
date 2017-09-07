@@ -8,24 +8,16 @@ $app->router->add("about", function () use ($app) {
   $app->renderPage("about", "About");
 });
 
-$app->router->add("report", function () use ($app) {
-  $app->renderPage("report", "Report");
-});
-
-$app->router->add("session", function () use ($app) {
-  $app->renderPage("session", "Session");
-});
-
-$app->router->add("dice", function () use ($app) {
-  $app->renderPage("dice", "Dice");
+$app->router->add("products", function () use ($app) {
+  $app->renderPage("products", "Products");
 });
 
 $app->router->add("blog", function () use ($app) {
   $app->renderPage("blog", "Blog");
 });
 
-$app->router->add("pages", function () use ($app) {
-  $app->renderPage("pages", "Pages");
+$app->router->add("cart", function () use ($app) {
+  $app->renderPage("cart", "Cart");
 });
 
 $app->router->add("profile", function () use ($app) {
@@ -33,9 +25,13 @@ $app->router->add("profile", function () use ($app) {
 });
 
 $app->router->add("webshop", function () use ($app) {
-  $app->renderPage("webshop", "Webshop");
+  $app->renderPage("admin/webshop", "Webshop");
 });
 
-$app->router->add("admin", function () use ($app) {
-  $app->renderPage("login/admin", "Admin");
+$app->router->add("user", function () use ($app) {
+  $app->renderPage("admin/user", "Users");
+});
+
+$app->router->add("content", function () use ($app) {
+  $app->renderPage("admin/content", "Content");
 });

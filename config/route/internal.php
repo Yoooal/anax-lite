@@ -9,15 +9,15 @@ $app->router->add('pages/{page}', function ($page) use ($app) {
 });
 
 $app->router->add("delete", function () use ($app) {
-  $app->renderPage("delete", "Delete");
+  $app->renderPage("admin/delete", "Delete");
 });
 
 $app->router->add("edit", function () use ($app) {
-  $app->renderPage("edit", "Edit");
+  $app->renderPage("admin/edit", "Edit");
 });
 
 $app->router->add("editWebshop", function () use ($app) {
-  $app->renderPage("editWebshop", "Edit");
+  $app->renderPage("admin/editWebshop", "Edit");
 });
 
 $app->router->add("logout", function () use ($app) {

@@ -19,7 +19,7 @@ $content = $db->executeFetchAll($sql);
   </div>
     <div class="page-content">
       <div class="row">
-        <div class="col-md-12 bak">
+        <div class="col-md-12">
         <br>
         <button type="button" class="btn btn-default btn-lg pull-right" data-toggle="modal" data-target="#addWebshop">
           <i class="fa fa-file-text-o" aria-hidden="true"></i>
@@ -36,8 +36,7 @@ $content = $db->executeFetchAll($sql);
                 <th>Lagerplats</th>
             </tr>
           </thead>
-        <?php $id = -1; foreach ($content as $row) :
-        ?>
+        <?php $id = -1; foreach ($content as $row) :?>
           <tbody>
             <tr>
                 <td><?= $row->id ?></td>

@@ -133,7 +133,7 @@ EOD;
 EOD;
       break;
 
-      case "aboutText":
+      case "block":
         $sql = <<<EOD
         SELECT
         *

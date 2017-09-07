@@ -13,12 +13,12 @@ $text = $textfilter->doFilter($content->data, $content->filter);
 ?>
 
 <div class="container" role="main">
-  <div class="page-header">
+  <div class="page-header" align="center">
       <h1><?= esc($content->title) ?></h1>
   </div>
   <div class="page-content">
     <div class="row">
-      <div class="col-md-12 bak">
+      <div class="col-md-8 col-md-offset-2">
         <article>
             <header>
                 <p><i>Latest update: <time datetime="<?= esc($content->published_iso8601) ?>" pubdate><?= esc($content->published) ?></time></i></p>

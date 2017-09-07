@@ -6,29 +6,17 @@ return [
             "text" => "Home",
             "route" => "",
         ],
-        "about" => [
-            "text" => "About",
-            "route" => "about",
-        ],
-        "report" => [
-            "text" => "Report",
-            "route" => "report",
-        ],
-        "session" => [
-            "text" => "Session",
-            "route" => "session",
-        ],
-        "dice" => [
-            "text" => "Dice",
-            "route" => "dice",
+        "products" => [
+            "text" => "Products",
+            "route" => "products",
         ],
         "blog" => [
             "text" => "Blog",
             "route" => "blog",
         ],
-        "pages" => [
-            "text" => "Pages",
-            "route" => "pages",
+        "about" => [
+            "text" => "About",
+            "route" => "about",
         ]
     ]
 ];

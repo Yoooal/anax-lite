@@ -11,6 +11,7 @@
   <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
   <!-- Private stylesheet, loads last -->
   <link rel="stylesheet" type="text/css" href="<?= $app->style ?>">
+  <script src="https://use.fontawesome.com/07b0ce5d10.js"></script>
 </head>
 
 <body role="document">

@@ -11,7 +11,7 @@ if (hasKeyPost("doDelete")) {
     $contentId = getPost("contentId");
     $sql = "UPDATE content SET deleted=NOW() WHERE id=?;";
     $db->execute($sql, [$contentId]);
-    header("Location: admin");
+    header('Location: ' . $_SERVER['HTTP_REFERER']);
     exit;
 }
 

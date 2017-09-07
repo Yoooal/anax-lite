@@ -10,14 +10,40 @@ if ($session->get("name") != "admin") {
 
 $status = '<div class="alert alert-info" role="alert">Change Password</div>';
 
-$sql = "SELECT * FROM content;";
-$content = $db->executeFetchAll($sql);
+// Get number of hits per page
+$hits = getGet("hits", 5);
+if (!(is_numeric($hits) && $hits > 0 && $hits <= 9)) {
+    die("Not valid for hits.");
+}
 
-$sql = "SELECT * FROM users;";
+// Get max number of pages
+$sql = "SELECT COUNT(id) AS max FROM users;";
+$max = $db->executeFetchAll($sql);
+$max = ceil($max[0]->max / $hits);
+
+// Get current page
+$page = getGet("page", 1);
+if (!(is_numeric($hits) && $page > 0 && $page <= $max)) {
+    die("Not valid for page.");
+}
+$offset = $hits * ($page - 1);
+
+// Only these values are valid
+$columns = ["username"];
+$orders = ["asc", "desc"];
+
+// Get settings from GET or use defaults
+$orderBy = getGet("orderby") ?: "username";
+$order = getGet("order") ?: "asc";
+
+// Incoming matches valid value sets
+if (!(in_array($orderBy, $columns) && in_array($order, $orders))) {
+    die("Not valid input for sorting.");
+}
+
+$sql = "SELECT * FROM users ORDER BY $orderBy $order LIMIT $hits OFFSET $offset;";
 $resultset = $db->executeFetchAll($sql);
-$array = json_decode(json_encode($resultset), True);
-// $password = $array["password"];
-// $id = $array["id"];
+$defaultRoute = "user?";
 
 // Handle incoming POST variables
 $new_pass = isset($_POST["new_pass"]) ? htmlentities($_POST["new_pass"]) : null;
@@ -42,41 +68,32 @@ if ($new_pass != null && $re_pass != null) {
 if ($id != null && $level != null) {
   $sql = "UPDATE users SET userLevel = ? WHERE id = ?;";
   $db->execute($sql, [$level, $id]);
-  header("Location: admin");
+  header("Location: user");
 }
 
 if ($del != null) {
   $sql = "DELETE FROM users WHERE id = ?;";
   $db->execute($sql, [$del]);
-  header("Location: admin");
+  header("Location: user");
 }
 
 if ($search != null) {
   $sql = "SELECT * FROM users WHERE username LIKE ?;";
   $resultset = $db->executeFetchAll($sql, [$search]);
 }
-
-if (hasKeyPost("doCreate")) {
-    $title = getPost("contentTitle");
-    $sql = "INSERT INTO content (title) VALUES (?);";
-    $db->execute($sql, [$title]);
-    $id = $db->lastInsertId();
-
-    header("Location: edit?id=$id");
-}
-
 ?>
 
 <div class="container" role="main">
   <div class="page-header">
-      <h1>Admin</h1>
+      <h1>Users</h1>
   </div>
   <div class="page-content">
     <div class="row">
-      <div class="col-md-12 bak">
-        <br>
+    <div class="col-md-12">
+      <br>
+      <div class="row">
         <div class="col-md-6">
-          <form class="" action="admin" method="post">
+          <form class="" action="user" method="post">
             <div id="custom-search-input">
                 <div class="input-group col-md-12">
                     <input type="search" name="search" class="form-control input-lg" placeholder="Search username" />
@@ -89,13 +106,25 @@ if (hasKeyPost("doCreate")) {
             </div>
           </form>
         </div>
+        <div class="col-md-6">
         <button type="button" class="btn btn-default btn-lg pull-right" data-toggle="modal" data-target="#addUser">
           <i class="fa fa-user-plus" aria-hidden="true"></i>
         </button>
+        </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
         <table class="table">
+          <nav aria-label="Page navigation">
+            <ul class="pagination">
+              <li><a href="<?= mergeQueryString(["hits" => 3], $defaultRoute) ?>">2</a></li>
+              <li><a href="<?= mergeQueryString(["hits" => 5], $defaultRoute) ?>">4</a></li>
+              <li><a href="<?= mergeQueryString(["hits" => 9], $defaultRoute) ?>">8</a></li>
+            </ul>
+          </nav>
           <thead>
             <tr>
-              <th>Username</th>
+              <th>Username <?= orderby("username", $defaultRoute) ?></th>
               <th>Level</th>
               <th></th>
             </tr>
@@ -124,7 +153,7 @@ if (hasKeyPost("doCreate")) {
                     </form>
                   </td>
                   <td>
-                  <form action="admin" method="POST">
+                  <form action="user" method="POST">
                     <input type="password" name="new_pass" placeholder="New password" required>
                     <input type="password" name="re_pass" placeholder="Re-enter Password" required>
                     <button type="submit" class="btn btn-primary" name="submitForm" value="Change password">Change Password</button>
@@ -139,50 +168,17 @@ if (hasKeyPost("doCreate")) {
             ?>
           </tbody>
         </table>
+        <b>Pages:</b>
+        <nav aria-label="Page navigation">
+          <ul class="pagination">
+            <?php for ($i = 1; $i <= $max; $i++) : ?>
+                <li><a href="<?= mergeQueryString(["page" => $i], $defaultRoute) ?>"><?= $i ?></a></li>
+            <?php endfor; ?>
+          </ul>
+        </nav>
         </div>
         </div>
-        <br>
-        <div class="row">
-        <div class="col-md-12 bak">
-        <div class="col-md-6">
-          <h2>Content</h2>
-        </div>
-        <br>
-        <button type="button" class="btn btn-default btn-lg pull-right" data-toggle="modal" data-target="#addContent">
-          <i class="fa fa-file-text-o" aria-hidden="true"></i>
-        </button>
-        <table class="table">
-          <thead>
-            <tr>
-                <th>#</th>
-                <th>Title</th>
-                <th>Type</th>
-                <th>Published</th>
-                <th>Created</th>
-                <th>Updated</th>
-                <th>Deleted</th>
-                <th>Actions</th>
-            </tr>
-          </thead>
-        <?php $id = -1; foreach ($content as $row) :
-        ?>
-          <tbody>
-            <tr>
-                <td><?= $row->id ?></td>
-                <td><?= $row->title ?></td>
-                <td><?= $row->type ?></td>
-                <td><?= $row->published ?></td>
-                <td><?= $row->created ?></td>
-                <td><?= $row->updated ?></td>
-                <td><?= $row->deleted ?></td>
-                <td><a type="button" class="btn btn-primary" href="edit?id=<?= $row->id ?>"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
-                    <a type="button" class="btn btn-danger" href="delete?id=<?= $row->id ?>"><i class="fa fa-trash-o" aria-hidden="true"></i></a></td>
-            </tr>
-          </tbody>
-        <?php endforeach; ?>
-        </table>
       </div>
-    </div>
     <div class="modal fade" id="addUser" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -221,27 +217,6 @@ if (hasKeyPost("doCreate")) {
     </div>
     </div>
     </div>
-    <div class="modal fade" id="addContent" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-    <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Create Content</h4>
-      </div>
-      <div class="modal-body">
-        <form role="form" method="POST" action="">
-            <div class="form-group">
-              <label for="contentTitle">Title: </label>
-              <input type="text" name="contentTitle" class="form-control" />
-            </div>
-            <button type="submit" class="btn btn-primary" name="doCreate">Add</button>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-    </div>
-    </div>
+  </div>
   </div>
 </div>

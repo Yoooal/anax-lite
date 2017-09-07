@@ -1,42 +1,23 @@
 <?php
 $db = $app->db;
 $db->connect();
-$urlReport = $app->url->create("status");
+$textfilter = $app->textfilter;
 
-$sql = $app->sqlCode->getSqlCode("aboutText");
-$content = $db->executeFetch($sql, ["aboutText", "block"]);
-
+$sql = $app->sqlCode->getSqlCode("page");
+$content = $db->executeFetch($sql, ["about", "page"]);
+$text = $textfilter->doFilter($content->data, $content->filter);
 ?>
 
 <div class="container" role="main">
-    <div class="page-header">
-        <h1>About</h1>
+  <div class="page-header">
+      <h1><?= esc($content->title) ?></h1>
+  </div>
+  <div class="page-content">
+    <div class="col-md-3">
+      <img src="img/sneaker.png" class="img-responsive" alt="Responsive image">
     </div>
-    <div class="row">
-      <div class="col-md-3">
-        <img src="img/profil.jpg" class="img-responsive aboutPicture" alt="Responsive image">
-      </div>
-      <div class="col-md-9 bak">
-        <br>
-        <h3>Joel Pettersson</h3>
-        Hej mitt namn är Joel Pettersson.
-        Jag är 29 år och bor i Stockholm.
-        Är uppväxt i Göteborg men flyttade till Stockholm för
-        ungefär två år sedan, och trivs hittills bra i storstan.
-        Har precis påbörjat en ny utbildning inom webbprogrammering på
-        Blekinge Tekniska Högskola och ser fram emot vad kursen har
-        att erbjuda mig!
-        För övrigt är jag en glad, positiv och social kille som gillar
-        att möta nytt folk och umgås med mina vänner.
-        Det var kul att ni kom in på min hemsida.
-        Hoppas ni gillar den!<br>
-        Repo på github: <a href="https://github.com/Yoooal/anax-lite">Anax-lite</a>
-        <br>
-        <a href="<?= $urlReport ?>">Status</a>
-      </div>
-      <div class="col-md-9 bak">
-        <br>
-        <?= $content->data ?>
-      </div>
+    <div class="col-md-9">
+      <?= $text ?>
     </div>
+  </div>
 </div>

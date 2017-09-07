@@ -13,7 +13,7 @@ $resultset = $db->executeFetchAll($sql, ["post"]);
   </div>
   <div class="page-content">
     <div class="row">
-      <div class="col-md-12 bak">
+      <div class="col-md-6">
         <article>
         <?php foreach ($resultset as $row) : ?>
         <section>
@@ -23,6 +23,9 @@ $resultset = $db->executeFetchAll($sql, ["post"]);
             </header>
             <?= esc($row->data) ?>
         </section>
+        <br>
+        <a class="btn btn-primary" href="blog/<?= esc($row->slug) ?>" role="button">Read More</a>
+        <hr>
         <?php endforeach; ?>
         </article>
       </div>

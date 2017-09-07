@@ -65,37 +65,39 @@ if ($old_pass != null && $new_pass != null && $re_pass != null) {
     <div class="page-header">
         <h1>Profile: <?= $session->get('name') ?></h1>
     </div>
-    <div class="col-md-4 bak">
-    <h2>Change Password</h2>
-    <?=$status?>
-    <form action="" method="POST">
-      <div class="form-group">
-        <label>Old Password:</label>
-        <input type="password" name="old_pass" class="form-control" placeholder="Old password" required>
+    <div class="page-content">
+      <div class="col-md-4 bak">
+        <h2>Change Password</h2>
+        <?=$status?>
+        <form action="" method="POST">
+          <div class="form-group">
+            <label>Old Password:</label>
+            <input type="password" name="old_pass" class="form-control" placeholder="Old password" required>
+          </div>
+          <div class="form-group">
+            <label>New Password:</label>
+            <input type="password" name="new_pass" class="form-control" placeholder="New password" required>
+          </div>
+          <div class="form-group">
+            <label>Re-enter Password:</label>
+            <input type="password" name="re_pass" class="form-control" placeholder="Re-enter Password" required>
+          </div>
+          <button type="submit" class="btn btn-lg btn-primary btn-block" name="submitForm" value="Change password">Change Password</button>
+        </form>
       </div>
-      <div class="form-group">
-        <label>New Password:</label>
-        <input type="password" name="new_pass" class="form-control" placeholder="New password" required>
-      </div>
-      <div class="form-group">
-        <label>Re-enter Password:</label>
-        <input type="password" name="re_pass" class="form-control" placeholder="Re-enter Password" required>
-      </div>
-      <button type="submit" class="btn btn-lg btn-primary btn-block" name="submitForm" value="Change password">Change Password</button>
-    </form>
-  </div>
 
-  <div class="col-md-4 col-md-offset-1 bak">
-    <h2>Set a Cookie</h2>
-    <?=$cookieStatus?>
-    <h4>Your Cookie: <?=$yourCookie?></h4>
-    <form action="" method="POST">
-      <div class="form-group">
-        <label>New Cookie:</label>
-        <input type="text" name="new_cookie" class="form-control" placeholder="Cookie here..">
-      </div>
-      <button type="submit" class="btn btn-lg btn-primary btn-block" name="submitForm" value="setCookie">Set Cookie</button>
-      <a href="?delete_cookie=hej" class="btn btn-lg btn-danger btn-block">Delete Cookie</a>
-    </form>
+    <div class="col-md-4 col-md-offset-1 bak">
+      <h2>Set a Cookie</h2>
+      <?=$cookieStatus?>
+      <h4>Your Cookie: <?=$yourCookie?></h4>
+      <form action="" method="POST">
+        <div class="form-group">
+          <label>New Cookie:</label>
+          <input type="text" name="new_cookie" class="form-control" placeholder="Cookie here..">
+        </div>
+        <button type="submit" class="btn btn-lg btn-primary btn-block" name="submitForm" value="setCookie">Set Cookie</button>
+        <a href="?delete_cookie=hej" class="btn btn-lg btn-danger btn-block">Delete Cookie</a>
+      </form>
+    </div>
   </div>
 </div>
