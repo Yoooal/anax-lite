@@ -18,7 +18,7 @@ if ($cookie->has($user_name)) {
   $cookieStatus = '<div class="alert alert-success" role="alert">Cookie exist</div>';
 }
 
-$sql = "SELECT * FROM users WHERE username LIKE ?;";
+$sql = "SELECT * FROM anax_users WHERE username LIKE ?;";
 $resultset = $db->executeFetch($sql, [$user_name]);
 $array = json_decode(json_encode($resultset), True);
 $password = $array["password"];
@@ -48,7 +48,7 @@ if ($old_pass != null && $new_pass != null && $re_pass != null) {
         // Check if new password matches
         if ($new_pass == $re_pass) {
                 $crypt_pass = password_hash($new_pass, PASSWORD_DEFAULT);
-                $sql = "UPDATE users SET password = ? WHERE id = ?;";
+                $sql = "UPDATE anax_users SET password = ? WHERE id = ?;";
                 $db->execute($sql, [$crypt_pass, $id]);
                 $status = '<div class="alert alert-success" role="alert">Password changed!</div>';
         } else {

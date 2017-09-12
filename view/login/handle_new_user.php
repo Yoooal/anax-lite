@@ -12,7 +12,7 @@ $userLevel = isset($_POST["userLevel"]) ? htmlentities($_POST["userLevel"]) : nu
 if ($user_name != null && $user_pass != null && $re_user_pass != null && $userLevel != null) {
     if ($user_pass == $re_user_pass) {
         $crypt_pass = password_hash($user_pass, PASSWORD_DEFAULT);
-        $sql = "INSERT INTO users (username, password, userLevel) VALUES (?, ?, ?);";
+        $sql = "INSERT INTO anax_users (username, password, userLevel) VALUES (?, ?, ?);";
         $db->execute($sql, [$user_name, $crypt_pass, $userLevel]);
         $usersId = $db->lastInsertId();
         header('Location: ' . $_SERVER['HTTP_REFERER']);

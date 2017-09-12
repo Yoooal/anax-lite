@@ -8,7 +8,7 @@ $content = '<div class="alert alert-danger" role="alert">User name or password i
 // Handle incoming POST variables
 $user_name = isset($_POST["name"]) ? htmlentities($_POST["name"]) : null;
 $user_pass = isset($_POST["pass"]) ? htmlentities($_POST["pass"]) : null;
-$sql = "SELECT * FROM users WHERE username LIKE ?;";
+$sql = "SELECT * FROM anax_users WHERE username LIKE ?;";
 
 
 // Correspond according to input

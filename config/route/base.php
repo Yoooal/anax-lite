@@ -36,6 +36,10 @@ $app->router->add("webshop", function () use ($app) {
   $app->renderPage("webshop", "Webshop");
 });
 
-$app->router->add("admin", function () use ($app) {
-  $app->renderPage("login/admin", "Admin");
+$app->router->add("user", function () use ($app) {
+  $app->renderPage("user", "Users");
+});
+
+$app->router->add("content", function () use ($app) {
+  $app->renderPage("content", "Content");
 });

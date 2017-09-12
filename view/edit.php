@@ -22,13 +22,13 @@ if (hasKeyPost("doSave")) {
     if (!$params["contentSlug"]) {
         $params["contentSlug"] = slugify($params["contentTitle"]);
     }
-    $sql = "SELECT * FROM content WHERE slug = ?;";
+    $sql = "SELECT * FROM anax_content WHERE slug = ?;";
     $content = $db->executeFetch($sql, [$params["contentSlug"]]);
     if ($content != false) {
       $status = '<div class="alert alert-danger" role="alert">Slug already exist!</div>';
     } else {
       $id = getPost("contentId");
-      $sql = "UPDATE content SET title=?, path=?, slug=?, data=?, type=?, filter=?, published=? WHERE id = ?;";
+      $sql = "UPDATE anax_content SET title=?, path=?, slug=?, data=?, type=?, filter=?, published=? WHERE id = ?;";
       $db->execute($sql, array_values($params));
       $status = '<div class="alert alert-success" role="alert">Edit saved!</div>';
     }
@@ -36,7 +36,7 @@ if (hasKeyPost("doSave")) {
 
 $contentId = getGet("id");
 
-$sql = "SELECT * FROM content WHERE id = ?;";
+$sql = "SELECT * FROM anax_content WHERE id = ?;";
 $content = $db->executeFetch($sql, [$contentId]);
 ?>
 
@@ -75,12 +75,6 @@ $content = $db->executeFetch($sql, [$contentId]);
       <div class="form-group">
         <label>Filter:</label>
         <input type="text" name="contentFilter" class="form-control" placeholder="Filter here.." value="<?= esc($content->filter) ?>"/>
-        <!-- <select multiple name="contentFilter" class="form-control">
-          <option>nl2br</option>
-          <option>bbcode</option>
-          <option>link</option>
-          <option>markdown</option>
-        </select> -->
       </div>
       <div class="form-group">
         <label>Publish:</label>

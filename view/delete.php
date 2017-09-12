@@ -9,13 +9,13 @@ if (!is_numeric($contentId)) {
 
 if (hasKeyPost("doDelete")) {
     $contentId = getPost("contentId");
-    $sql = "UPDATE content SET deleted=NOW() WHERE id=?;";
+    $sql = "UPDATE anax_content SET deleted=NOW() WHERE id=?;";
     $db->execute($sql, [$contentId]);
     header("Location: admin");
     exit;
 }
 
-$sql = "SELECT id, title FROM content WHERE id = ?;";
+$sql = "SELECT id, title FROM anax_content WHERE id = ?;";
 $content = $db->executeFetch($sql, [$contentId]);
 
 ?>

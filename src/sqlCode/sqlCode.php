@@ -18,7 +18,7 @@ class sqlCode
             WHEN (published <= NOW()) THEN "isPublished"
             ELSE "notPublished"
         END AS status
-        FROM content
+        FROM anax_content
         WHERE type=?
         ;
 EOD;
@@ -30,7 +30,7 @@ EOD;
         *,
         DATE_FORMAT(COALESCE(updated, published), '%Y-%m-%dT%TZ') AS modified_iso8601,
         DATE_FORMAT(COALESCE(updated, published), '%Y-%m-%d') AS modified
-        FROM content
+        FROM anax_content
         WHERE
         path = ?
         AND type = ?
@@ -46,7 +46,7 @@ EOD;
         *,
         DATE_FORMAT(COALESCE(updated, published), '%Y-%m-%dT%TZ') AS published_iso8601,
         DATE_FORMAT(COALESCE(updated, published), '%Y-%m-%d') AS published
-        FROM content
+        FROM anax_content
         WHERE
         slug = ?
         AND type = ?
@@ -63,7 +63,7 @@ EOD;
         *,
         DATE_FORMAT(COALESCE(updated, published), '%Y-%m-%dT%TZ') AS published_iso8601,
         DATE_FORMAT(COALESCE(updated, published), '%Y-%m-%d') AS published
-        FROM content
+        FROM anax_content
         WHERE type=?
         ORDER BY published DESC
         ;
@@ -137,7 +137,7 @@ EOD;
         $sql = <<<EOD
         SELECT
         *
-        FROM content
+        FROM anax_content
         WHERE
         path = ?
         AND type = ?
