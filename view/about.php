@@ -5,7 +5,6 @@ $urlReport = $app->url->create("status");
 
 $sql = $app->sqlCode->getSqlCode("aboutText");
 $content = $db->executeFetch($sql, ["aboutText", "block"]);
-
 ?>
 
 <div class="container" role="main">

@@ -12,12 +12,10 @@ if (hasKeyPost("doDelete")) {
     $sql = "UPDATE anax_content SET deleted=NOW() WHERE id=?;";
     $db->execute($sql, [$contentId]);
     header("Location: admin");
-    exit;
 }
 
 $sql = "SELECT id, title FROM anax_content WHERE id = ?;";
 $content = $db->executeFetch($sql, [$contentId]);
-
 ?>
 
 <div class="container" role="main">

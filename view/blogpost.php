@@ -9,7 +9,6 @@ $slug = substr($route, 6);
 $content = $db->executeFetch($sql, [$slug, "post"]);
 
 $text = $textfilter->doFilter($content->data, $content->filter);
-
 ?>
 
 <div class="container" role="main">

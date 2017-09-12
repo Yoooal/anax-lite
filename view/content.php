@@ -1,6 +1,5 @@
 <?php
 $session = $app->session;
-$cookie = $app->cookie;
 $db = $app->db;
 $db->connect();
 
@@ -19,11 +18,8 @@ if (hasKeyPost("doCreate")) {
     $sql = "INSERT INTO anax_content (title) VALUES (?);";
     $db->execute($sql, [$title]);
     $id = $db->lastInsertId();
-
     header("Location: edit?id=$id");
 }
-
-
 ?>
 
 <div class="container" role="main">

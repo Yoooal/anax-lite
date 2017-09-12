@@ -4,7 +4,6 @@ $db->connect();
 
 $sql = $app->sqlCode->getSqlCode("blog");
 $resultset = $db->executeFetchAll($sql, ["post"]);
-
 ?>
 
 <div class="container" role="main">
